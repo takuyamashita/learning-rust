@@ -92,7 +92,6 @@ pub fn run(config: Config) -> MyResult<()> {
             Err(err) => eprintln!("{}: {}", filename, err),
             Ok(file) => {
                 if let Ok(file) = count(file) {
-
                     println!(
                         "{}{}{}{}{}",
                         format_field(file.num_lines, config.lines),
@@ -144,13 +143,12 @@ pub fn count(mut file: impl BufRead) -> MyResult<FileInfo> {
     let mut line = String::new();
 
     loop {
-
         let read_bytes = file.read_line(&mut line)?;
 
         if read_bytes == 0 {
             break;
         }
-        
+
         num_lines += 1;
         num_words += line.split_whitespace().count();
         num_bytes += read_bytes;
@@ -167,10 +165,10 @@ pub fn count(mut file: impl BufRead) -> MyResult<FileInfo> {
     })
 }
 
-fn format_field(value: usize, show: bool) -> String{
+fn format_field(value: usize, show: bool) -> String {
     if show {
         format!("{:>8}", value)
-    }else {
+    } else {
         "".to_string()
     }
 }
@@ -202,4 +200,3 @@ mod tests {
         assert_eq!(format_field(10, true), "      10");
     }
 }
-
